@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(1.0F);
+            getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.sandwich));
         }
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
 

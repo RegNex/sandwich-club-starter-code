@@ -21,7 +21,12 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="co.etornam.sandwichclub.MainActivity" />
+
+        </activity>
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/ActivityTheme">

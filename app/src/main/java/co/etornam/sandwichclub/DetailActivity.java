@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,16 +21,14 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import co.etornam.sandwichclub.model.Sandwich;
 import co.etornam.sandwichclub.utils.JsonUtils;
 
 public class DetailActivity extends AppCompatActivity implements Animation.AnimationListener {
 
-
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
+    private static final String TAG = "DetailActivity";
     ProgressBar progressBar;
     TextView titleTV, descriptionTV, originTV, ingredientsTV, alsoKnownTV;
     boolean enableBackBtn = false;
@@ -40,6 +42,9 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        if (getSupportActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -78,7 +83,7 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
 
                     @Override
                     public void onError(Exception e) {
-
+                        Log.d(TAG, "onError: " + e.getMessage());
                     }
                 });
 
@@ -90,10 +95,20 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initViews() {
 
         progressBar = findViewById(R.id.thumb_progressbar);
-
         titleTV = findViewById(R.id.title_tv);
         descriptionTV = findViewById(R.id.description_tv);
         originTV = findViewById(R.id.origin_tv);
@@ -135,7 +150,6 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
         fadeOutAnim.setDuration(500);
         fadeOutAnim.setAnimationListener(this);
 
-
         bottomScrimView.startAnimation(fadeInAnim);
 
     }
@@ -151,6 +165,8 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
     }
 
     private void populateUI(Sandwich sandwich) {
+        String ingredient = TextUtils.join(", ", sandwich.getIngredients());
+        String alsoKnownAs = TextUtils.join(", ", sandwich.getAlsoKnownAs());
 
         titleTV.setText(sandwich.getMainName());
         descriptionTV.setText(sandwich.getDescription());
@@ -159,32 +175,8 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
         } else {
             originTV.setText(sandwich.getPlaceOfOrigin());
         }
-        settingList(sandwich.getIngredients(), ingredientsTV);
-        settingList(sandwich.getAlsoKnownAs(), alsoKnownTV);
-
-    }
-
-    /**
-     * First have to check if the list is empty then display NOT AVAILABLE.
-     *
-     * @param list
-     * @param textView
-     */
-
-    private void settingList(List<String> list, TextView textView) {
-        if (list.isEmpty()) {
-            textView.setText(getResources().getString(R.string.not_avail));
-            return;
-        }
-        StringBuilder data = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            data.append(list.get(i));
-            if (i != list.size() - 1)
-                data.append(",");
-        }
-
-        textView.setText(data.toString().replace(",", "\n"));
-
+        ingredientsTV.setText(ingredient);
+        alsoKnownTV.setText(alsoKnownAs);
     }
 
 
@@ -220,8 +212,6 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
             bottomScrimView.setVisibility(View.INVISIBLE);
             super.onBackPressed();
         }
-
-
     }
 
     @Override
@@ -231,7 +221,5 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
             alsoKnowAsBox.startAnimation(slideOutDown);
             enableBackBtn = false;
         }
-
-
     }
 }

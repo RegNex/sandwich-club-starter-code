@@ -170,13 +170,17 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
 
         titleTV.setText(sandwich.getMainName());
         descriptionTV.setText(sandwich.getDescription());
+        ingredientsTV.setText(ingredient);
         if (sandwich.getPlaceOfOrigin().isEmpty() || sandwich.getPlaceOfOrigin().equals(" ")) {
             originTV.setText(getResources().getString(R.string.not_avail));
         } else {
             originTV.setText(sandwich.getPlaceOfOrigin());
         }
-        ingredientsTV.setText(ingredient);
-        alsoKnownTV.setText(alsoKnownAs);
+        if (sandwich.getIngredients().isEmpty() || sandwich.getIngredients().equals(" ")) {
+            alsoKnownTV.setText(getResources().getString(R.string.not_avail));
+        } else {
+            alsoKnownTV.setText(alsoKnownAs);
+        }
     }
 
 

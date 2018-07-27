@@ -114,7 +114,7 @@ public class DetailActivity extends AppCompatActivity implements Animation.Anima
         slideDownAnim.setDuration(1000);
         slideDownAnim.setAnimationListener(this);
 
-        slideUpAnim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+        slideUpAnim = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         slideUpAnim.setDuration(1000);
         slideUpAnim.setAnimationListener(this);
 

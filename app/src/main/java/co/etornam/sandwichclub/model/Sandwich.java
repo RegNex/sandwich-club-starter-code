@@ -1,4 +1,4 @@
-package com.udacity.sandwichclub.model;
+package co.etornam.sandwichclub.model;
 
 import java.util.List;
 

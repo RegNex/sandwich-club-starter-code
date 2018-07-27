@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="200dp">
 
     <ImageView
         android:id="@+id/item_image"
@@ -13,25 +13,29 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_photo_size_select_actual_black_24dp" />
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_item" />
-
-    <TextView
-        android:id="@+id/item_title"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:singleLine="true"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/list_item_title"
-        android:textStyle="bold"
-        tools:text="Club Sandwich" />
+        android:alpha="0.7"
+        android:background="#000000">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="5dp"
+            android:singleLine="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/list_item_title"
+            android:textStyle="bold"
+            tools:text="Club Sandwich" />
+    </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/image_progressbar"
